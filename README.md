@@ -74,9 +74,22 @@ Autodesk signature.
 A `.msp` update patch is not a source. To get the files of an update, install it, and then import from the
 installation folder.
 
+## Publish
+
+The [Release](.github/workflows/Release.yml) workflow publishes to NuGet.org. It starts only by hand: select
+**Actions**, **Release**, and **Run workflow**, then give one version in `ref/` (ex. `2027.2.0`), or `all`. It builds
+the packages, publishes them, and creates a GitHub release for each version.
+
+- **A published version cannot be replaced.** NuGet.org lets you unlist it, not delete it. The workflow skips a
+	version that is already there.
+- It signs in with [Trusted Publishing](https://learn.microsoft.com/nuget/nuget-org/trusted-publishing), so the
+	repository stores no API key. NuGet.org needs a policy for this repository and the file `Release.yml`, and the
+	repository needs the `NUGET_USER` secret.
+
 ## Use a package
 
-Add the output folder as a package source of the consumer, in its `nuget.config`:
+A published package comes from NuGet.org. For a package that you built yourself, add the output folder as a package
+source of the consumer, in its `nuget.config`:
 
 ```xml
 <configuration>
@@ -115,6 +128,7 @@ the correct one with `-Version`.
 | `Packages.json` | The packages, their dependencies, and the framework of each release |
 | `Tools/` | The import and build scripts |
 | `Source/` | The pack project and the readme inside each package |
+| `.github/workflows/` | The manual publish workflow |
 | `ref/` | The Autodesk files, one folder for each framework and version |
 | `artifacts/` | The built packages. Not in Git. |
 
