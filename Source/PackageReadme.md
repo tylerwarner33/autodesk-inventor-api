@@ -10,5 +10,5 @@ supplies it.
 - **License.** Read `NOTICE.md` in this package. The assemblies and their documentation are Autodesk files.
 
 ```xml
-<PackageReference Include="TylerWarner33.Inventor.Api.Interop" Version="2027.*" />
+<PackageReference Include="TylerWarner.Inventor.Api.Interop" Version="2027.*" />
 ```

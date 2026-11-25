@@ -1,7 +1,5 @@
 {
-	"owner": "TylerWarner33",
-	"idPrefix": "TylerWarner33.Inventor.Api",
-	"repositoryUrl": "https://github.com/tylerwarner33/autodesk-inventor-api",
+	"idPrefix": "TylerWarner.Inventor.Api",
 	"releases": {
 		"2020": "net47",
 		"2021": "net48",

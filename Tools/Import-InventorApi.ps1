@@ -2,14 +2,14 @@
 
 <#
 .SYNOPSIS
-	Copies the Inventor API files into ref/<framework>/<version>/.
+	Copies the Inventor API files into Source/Content/<version>/.
 
 .DESCRIPTION
 	Reads each source, which is an Inventor installation folder or an installer media .zip file.
 	Installs nothing, and extracts only the files that Packages.json names. The files stay byte for byte as
 	Autodesk supplies them.
 
-	The framework comes from the releases of Packages.json. The package version is <product year>.<update>.<patch>. It comes from the file version of
+	Accepts only the releases that Packages.json names. The package version is <product year>.<update>.<patch>. It comes from the file version of
 	Autodesk.iLogic.Interfaces.dll, which follows the product update. The interop version does not always change
 	with an update.
 
@@ -20,7 +20,7 @@
 	Replaces the version that the script reads from the files. Use it with one source only.
 
 .PARAMETER Force
-	Replaces a ref/<framework>/<version>/ folder that exists.
+	Replaces a Source/Content/<version>/ folder that exists.
 
 .EXAMPLE
 	./Tools/Import-InventorApi.ps1 -Source "$env:ProgramFiles\Autodesk\Inventor 2027"
@@ -150,7 +150,7 @@ foreach ($item in $Source) {
 			throw "Inventor $release is not in the releases of Packages.json."
 		}
 
-		$target = Join-Path $repositoryRoot 'ref' $manifest.releases.$release $packageVersion
+		$target = Join-Path $repositoryRoot 'Source' 'Content' $packageVersion
 
 		if (Test-Path -LiteralPath $target) {
 			if (-not $Force) {

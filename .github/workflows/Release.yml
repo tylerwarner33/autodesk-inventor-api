@@ -1,4 +1,4 @@
-# Builds the packages of one version in ref/ (or of all versions), publishes them to NuGet.org with Trusted
+# Builds the packages of one version in Source/Content/ (or of all versions), publishes them to NuGet.org with Trusted
 # Publishing, and creates a GitHub release for each version. It starts only by hand, because a published package
 # version cannot be replaced.
 #
@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version in ref/ to publish (ex. 2027.2.0), or "all"'
+        description: 'Version in Source/Content/ to publish (ex. 2027.2.0), or "all"'
         type: string
         required: true
 
@@ -63,7 +63,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          $versions = $env:VERSION -eq 'all' ? @((Get-ChildItem ref/*/* -Directory).Name | Sort-Object) : @($env:VERSION)
+          $versions = $env:VERSION -eq 'all' ? @((Get-ChildItem Source/Content -Directory).Name | Sort-Object) : @($env:VERSION)
 
           foreach ($version in $versions) {
               gh release view $version *> $null
