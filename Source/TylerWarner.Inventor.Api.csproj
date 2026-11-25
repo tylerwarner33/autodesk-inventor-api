@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!--
+		Packs one assembly of one release. It compiles nothing.
+		Tools/Build-Packages.ps1 packs this project one time for each package, and gives these properties from
+		Packages.json: Version, LibraryName, PackageId, PackageIdPrefix, InventorFramework, PackageDependencies
+		(separated by "+"), and AssemblyDescription.
+	-->
+	<PropertyGroup>
+		<InventorFramework Condition="'$(InventorFramework)' == ''">net10.0</InventorFramework>
+		<TargetFramework>$(InventorFramework)</TargetFramework>
+		<EnableDefaultItems>false</EnableDefaultItems>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<!--
+			Nothing compiles, so no targeting pack is necessary. Without these two, a restore for an older framework needs
+			one from the machine or from NuGet.org.
+		-->
+		<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+		<AutomaticallyUseReferenceAssemblyPackages>false</AutomaticallyUseReferenceAssemblyPackages>
+		<!-- A package with ref/ and no lib/ is intentional: consumers must not copy the Autodesk assemblies. -->
+		<NoWarn>$(NoWarn);NU5128;NU5131</NoWarn>
+		<!-- A machine without the targeting pack gets this warning. It has no effect, because nothing compiles. -->
+		<MSBuildWarningsAsMessages>$(MSBuildWarningsAsMessages);MSB3644</MSBuildWarningsAsMessages>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageType>Dependency</PackageType>
+		<Authors>TylerWarner</Authors>
+		<Description>Unofficial package. $(AssemblyDescription) Compile time only.</Description>
+		<PackageTags>autodesk;inventor;ilogic;api;reference;unofficial</PackageTags>
+		<PackageProjectUrl>https://github.com/tylerwarner33/autodesk-inventor-api</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/tylerwarner33/autodesk-inventor-api</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseFile>NOTICE.md</PackageLicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\NOTICE.md" Pack="true" PackagePath="" />
+		<None Include="..\README.md" Pack="true" PackagePath="" />
+		<Content Include="Content\$(Version)\$(LibraryName).*" PackagePath="ref\$(TargetFramework)\" />
+	</ItemGroup>
+
+	<!-- The other packages of the same release, with the exact version. -->
+	<ItemGroup>
+		<PackageDependency Include="$(PackageDependencies.Split('+'))" />
+		<PackageReference Include="@(PackageDependency->'$(PackageIdPrefix).%(Identity)')" Version="[$(Version)]" />
+	</ItemGroup>
+
+	<!-- A wrong version or name would otherwise make an empty package. -->
+	<Target Name="ValidatePackageContent" BeforeTargets="GenerateNuspec">
+		<Error Condition="!Exists('Content\$(Version)\$(LibraryName).dll')"
+		       Text="Content\$(Version)\$(LibraryName).dll does not exist. Pack with Tools/Build-Packages.ps1." />
+	</Target>
+
+</Project>

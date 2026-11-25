@@ -1,0 +1,25 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Two trailing spaces are a line break in Markdown
+[*.md]
+trim_trailing_whitespace = false
+
+[*.{ps1,csproj,props,targets,json}]
+indent_style = tab
+
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# Autodesk files stay as supplied
+[Source/Content/**]
+charset = unset
+end_of_line = unset
+insert_final_newline = unset
+trim_trailing_whitespace = unset

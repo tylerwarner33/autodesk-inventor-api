@@ -1,0 +1,1074 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Autodesk.iLogic.UiBuilderCore</name>
+    </assembly>
+    <members>
+        <member name="F:Autodesk.InventorBuilder.VersionInfo.AssemblyVersion">
+            <summary>
+            Inventor Build Number Centralization(for C# projects)
+            This holds central version numbers for .NET assemblies.
+            </summary>
+        </member>
+        <member name="F:Autodesk.InventorBuilder.VersionInfo.CopyRightFrom1996">
+            <summary>
+            Inventor Copyright Year Centralization(for C# projects)
+            To update the copyright year for all executables and About dialogs, 
+            we need to change the end year in below block, for example, 
+            for Ada release, replace all end years with 2020.
+            </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.BitmapSerializable">
+            <summary>
+            Store bitmap data in a serializable format.
+            </summary>
+            <remarks>
+            // From http://www.dotnetspider.com/resources/4759-XML-Serialization-C-Part-II-Images.aspx
+            </remarks>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.BitmapSerializable.FileName">
+            <summary> The original filename associated with the bitmap. </summary>
+            <remarks> This is only used when editing the form. It is not required at runtime. </remarks>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.BitmapSerializable.Bitmap">
+            <summary> The bitmap (created at runtime). </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.BitmapSerializable.BitmapByteArray">
+            <summary> Bitmap data. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.ButtonControlSpec">
+            <summary>
+            Base class for button control specifications.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.ButtonControlSpec.Image">
+            <summary>Bitmap image associated with the button. May be null.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.ButtonControlSpec.TextVisible">
+            <summary>True if the button text should be visible. This is often false if there is an <see cref="P:Autodesk.iLogic.UiBuilderCore.Data.ButtonControlSpec.Image"/>.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.ButtonControlSpec.#ctor">
+            <summary>Constructor.</summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.iLogicRuleControlSpec">
+            <summary>
+            A specification for a button that will run an (internal, stored in the document) iLogic rule when clicked.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.iLogicRuleControlSpec.RuleName">
+            <summary> The name of the rule. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.iLogicRuleControlSpec.RuleButtonBehavior">
+            <summary> The behavior of this button. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.iLogicRuleControlSpec.InventorObjectDisplayName">
+            <summary> The name of the rule. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.iLogicRuleControlSpec.RenameRule(System.String,System.String)">
+            <summary>Respond to a change in the rule name.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.iLogicRuleControlSpec.IsApplyButton">
+            <summary> True if this is the Apply button on the form. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.iLogicRuleControlSpec.IsCloseButton">
+            <summary> This will be true if clicking the button will result in the form closing. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.iLogicExternalRuleControlSpec">
+            <summary>
+            A specification for a button that will run an external (not stored in the document) iLogic rule when clicked.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.iLogicExternalRuleControlSpec.Path">
+            <summary> The filesystem path of the external rule file. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.iLogicExternalRuleControlSpec.RenameRule(System.String,System.String)">
+            <summary>Respond to a change in the rule name. This method is not supported for an external rule.</summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.FormButtonControlSpec">
+            <summary>
+            A specification for a button that will launch a form when clicked.
+            </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.RuleButtonBehavior">
+            <summary>
+            Behavior of a rule button.
+            </summary>
+        </member>
+        <member name="F:Autodesk.iLogic.UiBuilderCore.Data.RuleButtonBehavior.RunRule">
+            <summary> Only run the rule. </summary>
+        </member>
+        <member name="F:Autodesk.iLogic.UiBuilderCore.Data.RuleButtonBehavior.ApplyValuesAndRunRule">
+            <summary> Apply changed parameter and property values, then run the rule. </summary>
+        </member>
+        <member name="F:Autodesk.iLogic.UiBuilderCore.Data.RuleButtonBehavior.ApplyValuesCloseAndRunRule">
+            <summary> Apply changed parameter and property values, close the form, then run the rule. </summary>
+        </member>
+        <member name="F:Autodesk.iLogic.UiBuilderCore.Data.RuleButtonBehavior.CloseAndRunRule">
+            <summary> Don't apply changed parameter and property values. Just close the form, then run the rule. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.ControlSpec">
+            <summary>
+            Base class that holds specifications for a UI control (such as an editor).
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.ControlSpec.TextLocation">
+            <summary>
+            For an editor control, this is the position of the label text relative to the edit field.
+            It isn't used for buttons.
+            </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.ControlSpec.#ctor">
+            <summary> Constructor </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.ControlSpec.DependsOnParameter(System.String)">
+            <summary>
+            Return true if this control depends in some way on a parameter value.
+            </summary>
+            <param name="parameterName">
+            This is usually a specific parameter name. But if it is null or empty, return true if the control depends on any parameter.
+            </param>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.ControlType">
+            <summary>
+            Control type.
+            </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.SizeConstraints">
+            <summary>
+            Size constraints for a UI element or container.
+            </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.SizeConstraints.#ctor">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="F:Autodesk.iLogic.UiBuilderCore.Data.SizeConstraints.MinimumSize">
+            <summary> Minimum size. </summary>
+        </member>
+        <member name="F:Autodesk.iLogic.UiBuilderCore.Data.SizeConstraints.MaximumSize">
+            <summary> Maximum size. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.SizeConstraints.IsEmpty">
+            <summary> True if both min and max sizes are empty (default). The units don't matter.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.SizeConstraints.ContainsUnits(Autodesk.iLogic.UiBuilderCore.Data.UiDimensionUnits)">
+            <summary> True if any of the dimensions is in the given units. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.SizeWithUnits">
+            <summary>
+            A screen size (width and height) with associated units. The units of height might be different than the units of width.
+            Similar to <see cref="T:System.Drawing.Size"/>
+            </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.SizeWithUnits.#ctor">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.SizeWithUnits.Width">
+            <summary> Width </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.SizeWithUnits.Height">
+            <summary> Height </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.SizeWithUnits.IsEmpty">
+            <summary> True if both with and height are zero, regardless of the units. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.SizeWithUnits.ContainsUnits(Autodesk.iLogic.UiBuilderCore.Data.UiDimensionUnits)">
+            <summary> True if either width or height are in the given units. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.DimensionWithUnits">
+            <summary>
+            A dimension (length or width) of a UI element, with associated units.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.DimensionWithUnits.Value">
+            <summary> The dimension. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.DimensionWithUnits.Units">
+            <summary> The units. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.DimensionWithUnits.#ctor">
+            <summary> Default constructor. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.DimensionWithUnits.#ctor(System.Double,Autodesk.iLogic.UiBuilderCore.Data.UiDimensionUnits)">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.DimensionWithUnits.#ctor(Autodesk.iLogic.UiBuilderCore.Data.DimensionWithUnits)">
+            <summary> Copy constructor. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.DimensionWithUnits.ValueInPixels(System.Double,System.Double)">
+            <summary>
+            Return the <see cref="P:Autodesk.iLogic.UiBuilderCore.Data.DimensionWithUnits.Value"/>, converted to physical pixels.
+            </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.DimensionWithUnits.PixelValueInUnits(System.Int32,System.Double,System.Double)">
+            <summary>
+            Convert a value in device-dependent pixels to an equivalent value in our units.
+            </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.UiDimensionUnits">
+            <summary>
+            Units of a dimension (length or width) of a 2D UI element.
+            </summary>
+        </member>
+        <member name="F:Autodesk.iLogic.UiBuilderCore.Data.UiDimensionUnits.Em">
+            <summary> Em (the typographical unit) </summary>
+        </member>
+        <member name="F:Autodesk.iLogic.UiBuilderCore.Data.UiDimensionUnits.Pixel">
+            <summary> Device-independent pixels </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.FontDescription">
+            <summary>
+            A serializable Font.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.FontDescription.FamilyName">
+            <summary> Font family name. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.FontDescription.Size">
+            <summary> Font size. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.FontDescription.Bold">
+            <summary> True if the font is in bold type. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.FontDescription.Italic">
+            <summary> True if the font is italic. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.FontDescription.IsDefault">
+            <summary> True if this is the default font. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.ColorDescription">
+            <summary>
+            A serializable Color.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.ColorDescription.ColorName">
+            <summary> The color name. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.ColorDescription.Color">
+            <summary> The color. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.FormPredefinedButtonsEnum">
+            <summary>
+            Choice of combinations of standard predefined form buttons.
+            </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.FormSpecification">
+            <summary>
+            A specification for an iLogic form. This contains form-level properties and a list of UI elements (controls and/or groups).
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.FormSpecification.StyleAndSkinName">
+            <summary>
+            Name of the style and skin. This is provided by the DevExpress implementation.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.FormSpecification.AllowCustomization">
+            <summary> 
+            True if end-user customization (this is an operation supported by the DevExpress layout control) is allowed for this form.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.FormSpecification.PredefinedButtons">
+            <summary>
+            Specification of the predefined buttons (e.g. OK and Cancel) used on the form.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.FormSpecification.Modal">
+            <summary> True if the dialog will run in modal mode. If false, its operation will be non-modal. /// </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.FormSpecification.ItemBordersVisible">
+            <summary> True if the borders of items within the form should be visible </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.FormSpecification.IsLauncherPage">
+            <summary> 
+            True if this is a launcher page form. This form is shown in the iLogic browser in Inventor. 
+            It can be per-document or global.
+            It usually contains only buttons that laucnh other forms.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.FormSpecification.ShowOnPlaceComponent">
+            <summary> 
+            True if this form is to be shown automatically during execution of the Place Component or Place iLogic Component command.
+            The form will replace the default generic parameters dialog that is shown by the Place iLogic Component command.
+            </summary>
+        </member>
+        <member name="F:Autodesk.iLogic.UiBuilderCore.Data.FormSpecification.LauncherUiName">
+            <summary> The standard name for the launcher form. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.FormSpecification.#ctor">
+            <summary> Default constructor. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.FormSpecification.#ctor(System.String)">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.FormSpecification.#ctor(System.String,Autodesk.iLogic.UiBuilderCore.Data.FormSpecification)">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.FormSpecification.ChangesModelImmediately">
+            <summary> True if parameter or iProperty changes made in this form will be immediately propagated to the Inventor model. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.ControlSpecGroupBase">
+            <summary> Base class for a group of control specs. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.ControlSpecGroupBase.CaptionImage">
+            <summary> Bitmap image to be shown in the group header. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.ControlSpecGroupBase.#ctor">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.ControlTabGroupSpec">
+            <summary> A tab group. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.ControlGroupSpec">
+            <summary> A regular (not a tab) group. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.ControlGroupSpec.BordersVisible">
+            <summary> If this is true, the group borders will be shown. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.ControlGroupSpec.#ctor">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.ControlRowSpec">
+            <summary>
+            Lay out controls or groups in a row.  The controls that this contains (just the immediate contents: not descendents)
+            should be laid out horizontally.
+            </summary>
+            <remarks>
+            This is not mapped to a DevExpress layout group. 
+            </remarks>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.ControlColumnSpec">
+            <summary>
+            Lay out controls or groups in a column.  The controls that this contains (just the immediate contents: not descendents)
+            should be laid out horizontally.
+            </summary>
+            <remarks>
+            This is not mapped to a DevExpress layout group. 
+            </remarks>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.iPropertyControlSpec">
+            <summary>
+            Specification for an editor for an Inventor iProperty value.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.iPropertyControlSpec.PropertyName">
+            <summary> Name of the Inventor iProperty. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.iPropertyControlSpec.PropertySetName">
+            <summary> Name of the Inventor iProperty set. </summary>
+        </member>
+        <member name="F:Autodesk.iLogic.UiBuilderCore.Data.iPropertyControlSpec.GenericName">
+            <summary> Internal use. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.iPropertyControlSpec.ValueForProperty(System.Object)">
+            <summary> Value for the property. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.iPropertyControlSpec.InventorObjectDisplayName">
+            <summary> Display name of the iProperty. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.iPropertyControlSpec.DependsOnParameter(System.String)">
+            <summary>
+            In this case, the test is for iProperty (rather than parameter) dependance.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.iPropertyControlSpec.SizeConstraintsUseHeight">
+            <summary>True if the height in the <see cref="T:Autodesk.iLogic.UiBuilderCore.Data.SizeConstraints"/> is used.</summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.TextPropertyControlSpec">
+            <summary> Editor control spec for an iProperty with a Text value. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.NumericPropertyControlSpec">
+            <summary> Editor control spec for an iProperty with a Number value. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.BooleanPropertyControlSpec">
+            <summary> Editor control spec for an iProperty with a Yes/No value. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.DatePropertyControlSpec">
+            <summary> Editor control spec for an iProperty with a Date value. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.iPropertyIdentifier">
+            <summary>
+            Identifier for an Inventor iProperty.  Contains a PropertySet name and property name.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.iPropertyIdentifier.PropertySetName">
+            <summary>The name of the iProperty set. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.iPropertyIdentifier.PropertyName">
+            <summary>The name of the iProperty. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.iPropertyIdentifier.#ctor(System.String,System.String)">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.ElementLocations">
+            <summary>
+            Contains values that specify how a specific element is positioned relative to another element.
+            </summary>
+            <remarks>
+            This is a clone of DevExpress.Utils.Locations. It exists to avoid a DevExpress reference.
+            </remarks>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.ValueControlSpec">
+            <summary>
+            Base class for a control that edits a single value (numeric expression, string, boolean, or date).
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.ValueControlSpec.ReadOnly">
+            <summary>
+            True if the control is read-only.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.ValueControlSpec.AlwaysReadOnly">
+            <summary>
+            Some parameters may be always read-only (e.g. Reference). The user can't edit their values directly.  However, their values might change due to other changes.
+            </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.ParameterControlSpec">
+            <summary>
+            Base class for a control in which the user can edit a parameter value.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.ParameterControlSpec.ParameterName">
+            <summary>
+            The Inventor parameter name, for lookup in the model. 
+            The control label defaults to this name as well, but it can be changed.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.ParameterControlSpec.EditControlType">
+            <summary>
+            The type of editor to be used to edit the parameter value.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.ParameterControlSpec.InventorObjectDisplayName">
+            <summary> Display name of the parameter. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.ParameterControlSpec.DependsOnParameter(System.String)">
+            <summary> True if this control is dependent on the parameter with the given name. </summary>
+            <param name="parameterName">The given parameter. If null or empty, return true if the 
+            control depends on any parameter.</param>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.ParameterControlSpec.RenameParameter(System.String,System.String)">
+            <summary> 
+            Respond to a parameter name change. Maintain the link between this control and the parameter it references.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.ParameterControlSpec.SizeConstraintsUseHeight">
+            <summary>True if the height component of the <see cref="T:Autodesk.iLogic.UiBuilderCore.Data.SizeConstraints"/> is used.</summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.SimpleParameterControlSpec">
+            <summary>
+            Base class for a text or numeric parameter editor control spec.
+            </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.SimpleParameterControlSpec.#ctor">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.NumericParameterControlSpec">
+            <summary>
+            Numeric parameter editor control spec.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.NumericParameterControlSpec.TrackBarProperties">
+            <summary> Trackbar properties. This is used only if the editor is a trackbar. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.NumericParameterControlSpec.#ctor">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.TextParameterControlSpec">
+            <summary>
+            Text parameter editor control spec.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.TextParameterControlSpec.MinimumLinesToShow">
+            <summary> The minimum count of lines to display for a multi-line value. </summary>
+        </member>
+        <member name="F:Autodesk.iLogic.UiBuilderCore.Data.TextParameterControlSpec.DefaultMinimumLinesToShow">
+            <summary> Default value for <see cref="P:Autodesk.iLogic.UiBuilderCore.Data.TextParameterControlSpec.MinimumLinesToShow"/>. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.TextParameterControlSpec.#ctor">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.MultiValueParameterControlSpec">
+            <summary>
+            Base class for a multi-value (choice list) parameter editor control spec.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.MultiValueParameterControlSpec.AllowCustomValues">
+            <summary> True if the user can enter a value that is not in the list. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.MultiValueParameterControlSpec.MinimumItemsToShow">
+            <summary> If the editor is a list box, this is the minimum numebr of items to show. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.MultiValueParameterControlSpec.RadioGroupColumnCount">
+            <summary> if the editor is a group of radio buttons, they can be arranged in more than one column. </summary>
+        </member>
+        <member name="F:Autodesk.iLogic.UiBuilderCore.Data.MultiValueParameterControlSpec.DefaultMinimumItemsToShow">
+            <summary> Default value for <see cref="P:Autodesk.iLogic.UiBuilderCore.Data.MultiValueParameterControlSpec.MinimumItemsToShow"/>. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.MultiValueParameterControlSpec.#ctor">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.MultiValueNumericParameterControlSpec">
+            <summary>
+            A multi-value (choice list) numeric parameter editor control spec.
+            </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.MultiValueTextParameterControlSpec">
+            <summary>
+            A multi-value (choice list) text parameter editor control spec.
+            </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.BooleanParameterControlSpec">
+            <summary>
+            A Boolean parameter editor control spec.
+            </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.BooleanParameterControlSpec.#ctor">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.PictureFolderSpec">
+            <summary>
+            A picture folder contains pictures (bitmaps) that can be shown in picture controls.
+            </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.PictureControlSpec">
+            <summary>
+            A picture control shows a bitmap on a form. The bitmap may be static, 
+            or the choice of which bitmap to show can be controlled by an Inventor text parameter.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.PictureControlSpec.Image">
+            <summary> The bitmap. This may be null if the picture is controlled by a parameter.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.PictureControlSpec.PictureParameterName">
+            <summary> The name of the Inventor parameter that controls the coice of bitmap. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.PictureControlSpec.LabelVisible">
+            <summary> True if the picture label should be visible. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.PictureControlSpec.#ctor">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.PictureControlSpec.DependsOnParameter(System.String)">
+            <summary> True if this control is dependent on the parameter with the given name. </summary>
+            <param name="parameterName">The given parameter. If null or empty, return true if the 
+            control depends on any parameter.</param>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.PictureControlSpec.RenameParameter(System.String,System.String)">
+            <summary> In response to a parameter rename operation, change the name in this spec. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.PictureControlSpec.InventorObjectDisplayName">
+            <summary> The name of the Inventor object, which in this case is the driving parameter (if any). </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.PictureSourceSpec">
+            <summary>
+            A picture source. This is used to supply a bitmap choice to a picture control.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.PictureSourceSpec.Bitmap">
+            <summary> The bitmap image. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.PictureSourceSpec.#ctor">
+            <summary> Default constructor. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.PictureSourceSpec.#ctor(Autodesk.iLogic.UiBuilderCore.Data.PictureControlSpec)">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.StyleAndSkinName">
+            <summary>
+             Information about a style and skin to be applied to a form
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.StyleAndSkinName.StyleName">
+            <summary> Style name. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.StyleAndSkinName.SkinName">
+            <summary> Skin name. </summary>
+        </member>
+        <member name="F:Autodesk.iLogic.UiBuilderCore.Data.StyleAndSkinName.DefaultName">
+            <summary> Name of the default style. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.StyleAndSkinName.#ctor">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.StyleAndSkinName.#ctor(System.String)">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.StyleAndSkinName.#ctor(System.String,System.String)">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.StyleAndSkinName.Equals(System.Object)">
+            <summary> Equality test. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.StyleAndSkinName.GetHashCode">
+            <summary> GetHashCode override. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.TrackBarProperties">
+            <summary>
+            Properties for a trackbar (a.k.a. slider) control.
+            This can be used as an editor for numeric parameters.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.TrackBarProperties.MinimumValue">
+            <summary>Minimum value: value at the left edge of the trackbar. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.TrackBarProperties.MaximumValue">
+            <summary>Maximum value: value at the right edge of the trackbar. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.TrackBarProperties.ValueIncrement">
+            <summary>The increment step. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.TrackBarProperties.#ctor">
+            <summary> Constructor. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.TrackBarProperties.ToString">
+            <summary>ToString override.</summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec">
+            <summary>
+            Specification for a container for UI element specifications. This is the base class for forms, groups, tab groups and rows.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.ContentsFont">
+            <summary>The default font to be used for elements within this container.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.ContentsTextLocation">
+            <summary>The default label text location to be used for elements within this container.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.#ctor">
+            <summary>Constructor.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.Items">
+            <summary>The element specs directly contained in this container.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.ShouldSerializeContentsFont">
+            <summary>True if the <see cref="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.ContentsFont"/> should be serialized.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.Add(Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec)">
+            <summary>Add an element spec to this container.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.ClearItems">
+            <summary>Clear the container. Remove all items.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.ItemCount">
+            <summary>The number of items.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.RenameParameter(System.String,System.String)">
+            <summary> In response to a parameter rename operation, change the name wherever it is used in this spec and its descendants. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.RenameRule(System.String,System.String)">
+            <summary> In response to a rule rename operation, change the name wherever it is used  in this spec and its descendants. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.FindPictureSourceSpec(System.String)">
+            <summary>Find a picture source with the given name contained within this container and its descendants.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.GetFormButtonNames(Autodesk.iLogic.UiBuilderCore.Data.FormButtonControlSpec,System.Collections.Generic.ICollection{System.String})">
+            <summary>Get the names of all form buttons within this container and its descendants.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.HasPropertyControls">
+            <summary>True if this container or its descendants contains any iProperty controls.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.HasRuleButtonWithApply">
+            <summary>True if this container or its descendants contains any button with Apply functionality.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.Remove(Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec)">
+            <summary>
+            Remove the spec if it is found in this container or any of its subcontainers.
+            Return true if it was found and deleted.
+            </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.EnsureGuids">
+            <summary>Ensure that every element has a GUID.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementContainerSpec.GetMaximumElementCountInAnyRow">
+            <summary>
+            Gets the maximum count of elements in any row within this container (recursively).
+            </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec">
+            <summary>
+            Store persistent specifications for a UI element.  At runtine, this object is linked to the actual UI element.
+            This is the base class for all specs: controls, groups and forms.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.Name">
+            <summary> User-visible name (label) /// </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.Guid">
+            <summary> A unique ID for this element. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.Tag">
+            <summary>This can be used by a client to attach additional data to a spec. It is ignored by iLogic and Inventor.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.ToolTip">
+            <summary> Tooltip. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.Font">
+            <summary> Font. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.EnablingParameterName">
+            <summary> 
+            The name of a Boolean parameter.
+            If this name is not empty, the named parameter controls the enabled/disabled status of the element.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.SizeConstraints">
+            <summary>Minimum and maximum limits on the sizes/// </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.SizeConstraintsUseHeight">
+            <summary>True if the height component of the <see cref="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.SizeConstraints"/> is used.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.#ctor">
+            <summary> Constructor. /// </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.DisplayName">
+            <summary> Display name. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.InventorObjectDisplayName">
+            <summary> Display name of the Inventor object (if any). </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.RenameParameter(System.String,System.String)">
+            <summary> In response to a parameter rename operation, change the name in this spec (and its descendants, if any). </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.RenameRule(System.String,System.String)">
+            <summary> In response to a rule rename operation, change the name in this spec (and its descendants, if any). </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.ShouldSerializeFont">
+            <summary> True if the <see cref="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.Font"/> is not default, and should be serialized. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.ShouldSerializeEnablingParameterName">
+            <summary> True if the <see cref="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.EnablingParameterName"/> is not default, and should be serialized. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.ShouldSerializeSizeConstraints">
+            <summary> True if the <see cref="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.SizeConstraints"/> are not default, and should be serialized. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.SizeConstraintsHasData">
+            <summary> True if the <see cref="P:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.SizeConstraints"/> property is not empty. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.SaveToFile(System.String)">
+            <summary> Save the specification to a file. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.SaveToByteArray">
+            <summary> Save the specification to a byte array. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.RestoreFromByteArray``1(System.Byte[])">
+            <summary> Restore the specification from a byte array. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.UiElementSpec.RestoreFromFile``1(System.String)">
+            <summary> Restore the specification from a file. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.UnconnectedLayoutItemSpec">
+            <summary>
+            Encapsulate an unconnected DevExpress LayoutItem : these don't contain controls.
+            They are not connected to Inventor objects.
+            </summary>
+            <remarks>
+            TODO: rename this, because the LabelSpec can show a parameter value.
+            </remarks>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.EmptySpaceSpec">
+            <summary>
+            Provides a rectangle of empty space between controls in a form.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.EmptySpaceSpec.MinimumWidth">
+            <remarks> Legacy size limit. </remarks>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.EmptySpaceSpec.MaximumWidth">
+            <remarks> Legacy size limit. </remarks>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.EmptySpaceSpec.LegacyMinAndMaxMigrated">
+            <summary> This will be true if the legacy limits have been migrated to the new <see cref="T:Autodesk.iLogic.UiBuilderCore.Data.SizeConstraints"/>. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.LabelSpec">
+            <summary>
+            A label element.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.LabelSpec.ParameterName">
+            <summary>
+            An Inventor Text parameter can be used to drive the label text.
+            </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.LabelSpec.DependsOnParameter(System.String)">
+            <summary>True if this depends on the given parameter.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Data.LabelSpec.RenameParameter(System.String,System.String)">
+            <summary>Handle a parameter rename operation.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.LabelSpec.InventorObjectDisplayName">
+            <summary>The display name of the parameter.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Data.LabelSpec.SizeConstraintsUseHeight">
+            <summary>True if the height component of the <see cref="T:Autodesk.iLogic.UiBuilderCore.Data.SizeConstraints"/> is used.</summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Data.SplitterSpec">
+            <summary>
+            A splitter (horizontal or vertical) in the form. The orientation is determined from the context: to split
+            in a horizontal direction a splitter must be placed directly under a <see cref="T:Autodesk.iLogic.UiBuilderCore.Data.ControlRowSpec"/>.
+            The splitter position can be adjusted (dragged) by the end user at runtime.
+            </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Storage.CustomizationStorage">
+            <summary>
+            Interface to manage the storage and retrieval of DevExpress XtraLayoutControl-specific customizations for an iLogic form.
+            </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.CustomizationStorage.SaveToFile(System.String)">
+            <summary>Save customizations to a file.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.CustomizationStorage.SaveToByteArray">
+            <summary>Save customizations to a byte array.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.CustomizationStorage.RestoreFromFile(System.String)">
+            <summary>Restore customizations from a file.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.CustomizationStorage.RestoreFromByteArray(System.Byte[])">
+            <summary>Restore customizations from a byte array.</summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist">
+            <summary>
+             Methods to store and retrieve the size, position and splitter locations of a iLogic form.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.Size">
+            <summary>Size of the form.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.Location">
+            <summary>Location of the form on the screen.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.DipToPixelConversionFactors">
+            <summary>
+            Multiplicative factors to convert device-independent pixels to device-dependant.
+            These are the factors that were in effect on the active device when the data was saved.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.SplitterLocations">
+            <summary>Locations of each splitter (if any).</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.GroupExpansionStateList">
+            <summary>Expansion state of each group (if any).</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.TabGroupSelectedPageList">
+            <summary>The selected tab page index in each tab group (if any).</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.AnyListChanged(Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist)">
+            <summary>
+            Return true if the any of the list data has changed from the original.
+            </summary>
+            <param name="original">The orignal data for comparison.</param>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.IsValid">
+            <summary>True if all the data is valid.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.SizeIsValid">
+            <summary>True if the <see cref="P:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.Size"/> data is valid.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.InvalidateSize">
+            <summary>Invalidate the <see cref="P:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.Size"/> data, so it won't be reused.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.SaveToFile(System.String)">
+            <summary>Save the form state data to a file.</summary>
+            <remarks>This data is considered cosmetic. Any exceptions encountered while saving are not propagated.</remarks>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.SaveToByteArray">
+            <summary>Save the form state data to a byte array.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.RestoreFromFile(System.String)">
+            <summary>Restore the form state data from a file.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist.RestoreFromByteArray(System.Byte[])">
+            <summary>Restore the form state data from a byte array.</summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Storage.SplitterLocation">
+            <summary>
+            Spliiter location data.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.SplitterLocation.Name">
+            <summary>The name of the splitter element spec.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.SplitterLocation.Location">
+            <summary>The location of the splitter element in form coordinates.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.SplitterLocation.CopyAndTransform(System.Func{System.Drawing.Point,System.Drawing.Point})">
+            <summary>
+            Return a copy in which a transform has been applied to the location.
+            </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.SplitterLocation.Equals(Autodesk.iLogic.UiBuilderCore.Storage.SplitterLocation)">
+            <summary>Equality test.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.SplitterLocation.EqualTo(Autodesk.iLogic.UiBuilderCore.Storage.SplitterLocation)">
+            <summary> For backward compatibility. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Storage.GroupExpansionState">
+            <summary>
+            Store the expansion state for a named group.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.GroupExpansionState.Name">
+            <summary>The name of the group.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.GroupExpansionState.Expanded">
+            <summary>True if the group is displayed in an expanded (as opposed to a collapsed) state.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.GroupExpansionState.Equals(Autodesk.iLogic.UiBuilderCore.Storage.GroupExpansionState)">
+            <summary>Equality test.</summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Storage.TabGroupSelectedPage">
+            <summary>
+            Store the index of the selected tab for a tab group.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.TabGroupSelectedPage.Name">
+            <summary>The name of the tab group.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.TabGroupSelectedPage.SelectedIndex">
+            <summary>Index of the selected tab page in the group.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.TabGroupSelectedPage.Equals(Autodesk.iLogic.UiBuilderCore.Storage.TabGroupSelectedPage)">
+            <summary>Equality test.</summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Storage.DipToPixelConversion">
+            <summary>
+            Multiplicative factors used to convert device-independent pixels to device-dependent pixels.
+            pixels = dip * factor
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.DipToPixelConversion.WidthFactor">
+            <summary>The factor for the width (X direction).</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.DipToPixelConversion.HeightFactor">
+            <summary>The factor for the height (Y direction).</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.DipToPixelConversion.#ctor">
+            <summary>Default constructor.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.DipToPixelConversion.#ctor(System.Double[])">
+            <summary>Constructor.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.DipToPixelConversion.GetFactors">
+            <summary>Get the factors as an array.</summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage">
+            <summary>
+            Provide storage for FormSpecification objects.
+            </summary>
+            <remarks>
+            In the documentation for the members, the word "form" may be used instead of "form specification".
+            At runtime, a form specification may be used to create an actual form in the UI.
+            Note: form names are case-insensitive.
+            </remarks>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.IsGlobal">
+            <summary>
+            This will be true if this is a storage container for global (or possibly per-project) forms.
+            If false, then the storage is within an Inventor document.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.HaveWriteAccess">
+            <summary>
+            This will be true if the current process has write access to the storage.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.ContainsForms">
+            <summary> Return true if the storage contains any forms. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.DeleteFormSpecification(System.String)">
+            <summary> Delete a form by name. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.DeleteOldFormSpecification(Autodesk.iLogic.UiBuilderCore.Utilities.NameChange)">
+            <summary> Delete a form whose name is the old name in the nameChange object. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.DeleteAll">
+            <summary> Delete all forms. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.FormSpecificationExists(System.String)">
+            <summary> Return true if a form with the given name exists. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.IsReadOnly(System.String)">
+            <summary> Return true if the form with the given name is read-only. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.LoadFormSpecification(System.String)">
+            <summary>
+            Get a FormSpecification by name.
+            If no form exists with the given name, and empty form will be returned.
+            </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.SaveFormSpecification(Autodesk.iLogic.UiBuilderCore.Data.FormSpecification)">
+            <summary> Save a form specification to persistent storage. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.UsedNames(System.String)">
+            <summary> Return a list of existing form names, excluding the provided (case-insensitive) name. </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.FormNames">
+            <summary> Return a list of existing form names. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.Rename(System.String,System.String)">
+            <summary> Rename an existing form. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.SaveFormState(Autodesk.iLogic.UiBuilderCore.Data.FormSpecification,Autodesk.iLogic.UiBuilderCore.Storage.FormStatePersist)">
+            <summary> Save the current form state (size and position). </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.LoadFormState(Autodesk.iLogic.UiBuilderCore.Data.FormSpecification)">
+            <summary> Load a saved form state (size and position). </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.ResetFormState(Autodesk.iLogic.UiBuilderCore.Data.FormSpecification)">
+            <summary> Reset the state (size and position) of a form to default values. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.SaveCustomization(Autodesk.iLogic.UiBuilderCore.Data.FormSpecification,Autodesk.iLogic.UiBuilderCore.Storage.CustomizationStorage)">
+            <summary> Save DevExpress-specific customization data. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.SaveCustomization(Autodesk.iLogic.UiBuilderCore.Data.FormSpecification,System.Byte[])">
+            <summary> Save DevExpress-specific customization data. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.LoadCustomization(Autodesk.iLogic.UiBuilderCore.Data.FormSpecification,Autodesk.iLogic.UiBuilderCore.Storage.CustomizationStorage)">
+            <summary> Load DevExpress-specific customization data. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.LoadCustomization(Autodesk.iLogic.UiBuilderCore.Data.FormSpecification)">
+            <summary> Load DevExpress-specific customization data. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.DeleteCustomization(Autodesk.iLogic.UiBuilderCore.Data.FormSpecification)">
+            <summary> Delete DevExpress-specific customization data. </summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Storage.UiStorage.ResetStateAndCustomization(Autodesk.iLogic.UiBuilderCore.Data.FormSpecification)">
+            <summary> Reset both the state (size and position) to default values and clear the DevExpress-specific customization data. </summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Utilities.NameChange">
+            <summary>
+            Store data for a name change operation.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Utilities.NameChange.OldName">
+            <summary>Old name.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Utilities.NameChange.NewName">
+            <summary>New name.</summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Utilities.NameChange.Changed">
+            <summary>True if the new name is actually different from the old name.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Utilities.NameChange.#ctor">
+            <summary>Default constructor.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Utilities.NameChange.#ctor(System.String,System.String)">
+            <summary>Constructor.</summary>
+        </member>
+        <member name="T:Autodesk.iLogic.UiBuilderCore.Utilities.NameChangeCollection">
+            <summary>
+            A collection of name change objects.
+            </summary>
+        </member>
+        <member name="P:Autodesk.iLogic.UiBuilderCore.Utilities.NameChangeCollection.NameMap">
+            <summary>A dictionary mapping old names to new names.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Utilities.NameChangeCollection.AddNameChange(Autodesk.iLogic.UiBuilderCore.Utilities.NameChange)">
+            <summary>Add a name change object.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Utilities.NameChangeCollection.GetOriginalName(System.String)">
+            <summary>Get the original (old) name corresponding to a given new name. If none is found, return the new name.</summary>
+        </member>
+        <member name="M:Autodesk.iLogic.UiBuilderCore.Utilities.NameChangeCollection.ChangeFormNames(Autodesk.iLogic.UiBuilderCore.Storage.UiStorage)">
+            <summary>Apply all name changes to forms.</summary>
+        </member>
+    </members>
+</doc>
