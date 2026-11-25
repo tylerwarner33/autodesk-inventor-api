@@ -2,8 +2,9 @@
 
 	<!--
 		Packs one assembly of one release. It compiles nothing.
-		Tools/Build-Packages.ps1 packs this project one time for each package, and gives these properties from
-		Packages.json: Version, LibraryName, PackageId, PackageIdPrefix, InventorFramework, PackageDependencies
+		Tools/Build-Packages.ps1 packs this project one time for each package. From the folder in Source/Content/ it
+		gives ContentVersion (the folder name) and Version (the folder name, with an optional prerelease suffix). From
+		Packages.json it gives LibraryName, PackageId, PackageIdPrefix, InventorFramework, PackageDependencies
 		(separated by "+"), and AssemblyDescription.
 	-->
 	<PropertyGroup>
@@ -40,7 +41,7 @@
 		<None Include="..\NOTICE.md" Pack="true" PackagePath="" />
 		<None Include="..\README.md" Pack="true" PackagePath="" />
 		<None Include="..\.nuget\PackageIcon.png" Pack="true" PackagePath="images/" />
-		<Content Include="Content\$(Version)\$(LibraryName).*" PackagePath="ref\$(TargetFramework)\" />
+		<Content Include="Content\$(ContentVersion)\$(LibraryName).*" PackagePath="ref\$(TargetFramework)\" />
 	</ItemGroup>
 
 	<!-- The other packages of the same release, with the exact version. -->
@@ -51,8 +52,8 @@
 
 	<!-- A wrong version or name would otherwise make an empty package. -->
 	<Target Name="ValidatePackageContent" BeforeTargets="GenerateNuspec">
-		<Error Condition="!Exists('Content\$(Version)\$(LibraryName).dll')"
-		       Text="Content\$(Version)\$(LibraryName).dll does not exist. Pack with Tools/Build-Packages.ps1." />
+		<Error Condition="!Exists('Content\$(ContentVersion)\$(LibraryName).dll')"
+		       Text="Content\$(ContentVersion)\$(LibraryName).dll does not exist. Pack with Tools/Build-Packages.ps1." />
 	</Target>
 
 </Project>

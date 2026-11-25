@@ -16,15 +16,25 @@
 .PARAMETER Version
 	The versions in Source/Content/ to build. The default is all of them.
 
+.PARAMETER Suffix
+	A prerelease label to add to each package version (ex. beta.1 makes 2027.2.0-beta.1). The default is none.
+
 .EXAMPLE
 	./Tools/Build-Packages.ps1
 
 .EXAMPLE
 	./Tools/Build-Packages.ps1 -Version 2027.2.0
+
+.EXAMPLE
+	./Tools/Build-Packages.ps1 -Version 2027.2.0 -Suffix beta.1
 #>
 [CmdletBinding()]
 param(
-	[string[]] $Version
+	[string[]] $Version,
+
+	# Empty, or identifiers of letters, digits, and "-" that "." separates.
+	[ValidatePattern('^([0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$')]
+	[string] $Suffix
 )
 
 Set-StrictMode -Version Latest
@@ -72,12 +82,14 @@ foreach ($folder in $available) {
 	}
 
 	$framework = $manifest.releases.$release
+	$packageVersion = $Suffix ? "$($folder.Name)-$Suffix" : $folder.Name
 
 	foreach ($package in $manifest.packages) {
 		$id = "$($manifest.idPrefix).$($package.name)"
 
 		$properties = @(
-			"-p:Version=$($folder.Name)"
+			"-p:Version=$packageVersion"
+			"-p:ContentVersion=$($folder.Name)"
 			"-p:InventorFramework=$framework"
 			"-p:LibraryName=$($package.assembly)"
 			"-p:PackageId=$id"
@@ -90,17 +102,17 @@ foreach ($folder in $available) {
 
 		& dotnet restore $project --verbosity quiet @properties
 		if ($LASTEXITCODE -ne 0) {
-			throw "The restore of $id $($folder.Name) failed."
+			throw "The restore of $id $packageVersion failed."
 		}
 
 		& dotnet pack $project --no-build --output $outputFolder --verbosity quiet @properties
 		if ($LASTEXITCODE -ne 0) {
-			throw "The pack of $id $($folder.Name) failed."
+			throw "The pack of $id $packageVersion failed."
 		}
 
 		[pscustomobject]@{
 			Id        = $id
-			Version   = $folder.Name
+			Version   = $packageVersion
 			Framework = $framework
 		}
 	}

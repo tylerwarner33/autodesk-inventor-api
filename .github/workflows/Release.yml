@@ -13,6 +13,10 @@ on:
         description: 'Version in Source/Content/ to publish (ex. 2027.2.0), or "all"'
         type: string
         required: true
+      suffix:
+        description: 'Prerelease suffix (ex. beta.1). Empty publishes a stable version.'
+        type: string
+        required: false
 
 concurrency:
   group: release
@@ -24,8 +28,9 @@ jobs:
       id-token: write
       contents: write
     env:
-      # An environment variable, so the input is never part of the script text.
+      # Environment variables, so the inputs are never part of the script text.
       VERSION: ${{ inputs.version }}
+      SUFFIX: ${{ inputs.suffix }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
@@ -39,10 +44,10 @@ jobs:
         shell: pwsh
         run: |
           if ($env:VERSION -eq 'all') {
-              ./Tools/Build-Packages.ps1
+              ./Tools/Build-Packages.ps1 -Suffix $env:SUFFIX
           }
           else {
-              ./Tools/Build-Packages.ps1 -Version $env:VERSION
+              ./Tools/Build-Packages.ps1 -Version $env:VERSION -Suffix $env:SUFFIX
           }
 
       # The temporary API key is short lived, so this step comes after the build.
@@ -65,17 +70,25 @@ jobs:
         run: |
           $versions = $env:VERSION -eq 'all' ? @((Get-ChildItem Source/Content -Directory).Name | Sort-Object) : @($env:VERSION)
 
+          # A prerelease never becomes the "Latest" release on GitHub.
+          $options = @()
+          if ($env:SUFFIX) {
+              $options += '--prerelease'
+          }
+
           foreach ($version in $versions) {
-              gh release view $version *> $null
+              $tag = $env:SUFFIX ? "$version-$env:SUFFIX" : $version
+
+              gh release view $tag *> $null
               if ($LASTEXITCODE -eq 0) {
-                  Write-Host "The release $version exists. Skipped."
+                  Write-Host "The release $tag exists. Skipped."
                   continue
               }
 
-              $packages = @((Get-ChildItem "artifacts/packages/*.$version.nupkg").FullName)
-              gh release create $version @packages --target $env:GITHUB_SHA --title $version --generate-notes
+              $packages = @((Get-ChildItem "artifacts/packages/*.$tag.nupkg").FullName)
+              gh release create $tag @packages @options --target $env:GITHUB_SHA --title $tag --generate-notes
               if ($LASTEXITCODE -ne 0) {
-                  throw "The release $version failed."
+                  throw "The release $tag failed."
               }
           }
 
