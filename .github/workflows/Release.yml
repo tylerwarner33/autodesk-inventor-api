@@ -61,7 +61,19 @@ jobs:
         shell: pwsh
         env:
           NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
-        run: dotnet nuget push "artifacts/packages/*.nupkg" --api-key $env:NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        # On Windows, "dotnet nuget push" does not expand a wildcard in a path with "/". PowerShell finds the files.
+        run: |
+          $packages = @(Get-ChildItem -Path artifacts/packages -Filter *.nupkg)
+          if ($packages.Count -eq 0) {
+              throw 'artifacts/packages/ holds no package.'
+          }
+
+          foreach ($package in $packages) {
+              dotnet nuget push $package.FullName --api-key $env:NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+              if ($LASTEXITCODE -ne 0) {
+                  throw "The push of $($package.Name) failed."
+              }
+          }
 
       - name: Create Releases
         shell: pwsh
