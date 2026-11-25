@@ -55,6 +55,9 @@ the file version of `Autodesk.iLogic.Interfaces.dll` (ex. `29.40.40700` is `2025
 The framework is the one that Inventor hosts. The iLogic assemblies of 2021 and 2022 target .NET Framework 4.7,
 but their installer media supplies .NET Framework 4.8.
 
+A prerelease has a suffix (ex. `2027.2.0-beta.1`). A floating version such as `2027.*` does not select it, so give the
+full version to use one.
+
 ## Work on this repository
 
 The rest of this page is for people who build or publish the packages.
@@ -73,11 +76,17 @@ Build the packages from the files in `Source/Content/<version>/` into `artifacts
 ./Tools/Build-Packages.ps1
 ```
 
+To build one version as a prerelease:
+
+```powershell
+./Tools/Build-Packages.ps1 -Version 2027.2.0 -Suffix beta.1
+```
+
 The [pack project](https://github.com/tylerwarner33/autodesk-inventor-api/blob/main/Source/TylerWarner.Inventor.Api.csproj)
 maps the source folder to the package folder with one item:
 
 ```xml
-<Content Include="Content\$(Version)\$(LibraryName).*" PackagePath="ref\$(TargetFramework)\" />
+<Content Include="Content\$(ContentVersion)\$(LibraryName).*" PackagePath="ref\$(TargetFramework)\" />
 ```
 
 To test a package that you built, add the output folder as a package source of the consumer, in its `nuget.config`:
@@ -121,8 +130,11 @@ workflow publishes to NuGet.org. It starts only by hand: select **Actions**, **R
 give one version in `Source/Content/` (ex. `2027.2.0`), or `all`. It builds the packages, publishes them, and creates
 a GitHub release for each version.
 
-- **A published version cannot be replaced.** NuGet.org lets you unlist it, not delete it. The workflow skips a
-	version that is already there.
+To test the workflow, or to publish a prerelease, also give a **suffix** (ex. `beta.1`). The packages and the release
+get the version `2027.2.0-beta.1`, and GitHub marks the release as a prerelease.
+
+- **A published version cannot be replaced**, and this includes a prerelease. NuGet.org lets you unlist it, not delete
+	it. The workflow skips a version that is already there.
 - It signs in with [Trusted Publishing](https://learn.microsoft.com/nuget/nuget-org/trusted-publishing), so the
 	repository stores no API key. NuGet.org needs a policy for this repository and the file `Release.yml`, and the
 	repository needs the `NUGET_USER` secret.
