@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!--
+		The host project that "dotnet pack" needs. It compiles nothing and references nothing.
+		Tools/Build-Packages.ps1 writes a .nuspec for each package and gives it to this project with -p:NuspecFile.
+		The target framework here has no effect on a package: the .nuspec names the ref/ folder.
+	-->
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<EnableDefaultItems>false</EnableDefaultItems>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<!-- A package with ref/ and no lib/ is intentional: consumers must not copy the Autodesk assemblies. -->
+		<NoWarn>$(NoWarn);NU5131</NoWarn>
+	</PropertyGroup>
+
+</Project>

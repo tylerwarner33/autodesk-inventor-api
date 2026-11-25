@@ -1,0 +1,71 @@
+{
+	"owner": "TylerWarner33",
+	"idPrefix": "TylerWarner33.Inventor.Api",
+	"repositoryUrl": "https://github.com/tylerwarner33/autodesk-inventor-api",
+	"releases": {
+		"2020": "net47",
+		"2021": "net48",
+		"2022": "net48",
+		"2023": "net48",
+		"2024": "net48",
+		"2025": "net8.0",
+		"2026": "net8.0",
+		"2027": "net10.0"
+	},
+	"packages": [
+		{
+			"name": "Interop",
+			"assembly": "Autodesk.Inventor.Interop",
+			"folder": "Bin/Public Assemblies",
+			"optional": false,
+			"xml": true,
+			"dependencies": [],
+			"description": "Autodesk Inventor API interop reference assembly."
+		},
+		{
+			"name": "iLogic.Types",
+			"assembly": "Autodesk.iLogic.Types",
+			"folder": "Bin",
+			"optional": false,
+			"xml": true,
+			"dependencies": [ "Interop" ],
+			"description": "Autodesk Inventor iLogic types reference assembly."
+		},
+		{
+			"name": "iLogic.Interfaces",
+			"assembly": "Autodesk.iLogic.Interfaces",
+			"folder": "Bin",
+			"optional": false,
+			"xml": true,
+			"dependencies": [ "Interop", "iLogic.Types" ],
+			"description": "Autodesk Inventor iLogic interfaces reference assembly."
+		},
+		{
+			"name": "iLogic.Runtime",
+			"assembly": "Autodesk.iLogic.Runtime",
+			"folder": "Bin",
+			"optional": false,
+			"xml": true,
+			"dependencies": [ "Interop", "iLogic.Interfaces", "iLogic.Types" ],
+			"description": "Autodesk Inventor iLogic rule runtime reference assembly."
+		},
+		{
+			"name": "iLogic.Automation",
+			"assembly": "Autodesk.iLogic.Automation",
+			"folder": "Bin",
+			"optional": true,
+			"xml": false,
+			"dependencies": [ "Interop", "iLogic.Interfaces" ],
+			"description": "Autodesk Inventor iLogic automation reference assembly."
+		},
+		{
+			"name": "iLogic.UiBuilderCore",
+			"assembly": "Autodesk.iLogic.UiBuilderCore",
+			"folder": "Bin",
+			"optional": true,
+			"xml": true,
+			"dependencies": [],
+			"description": "Autodesk Inventor iLogic form builder core reference assembly."
+		}
+	]
+}

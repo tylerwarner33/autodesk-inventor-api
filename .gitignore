@@ -424,3 +424,9 @@ FodyWeavers.xsd
 
 # Official VS Code C# Dev Kit Extension exclusion
 #*.lscache
+
+# Autodesk files, not for distribution
+Libs/
+
+# Bash crash dumps
+bash.exe.stackdump
