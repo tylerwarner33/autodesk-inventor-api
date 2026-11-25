@@ -16,6 +16,8 @@ See `README.md` for the packages, the version rule, and the commands.
 - **Keep `ref/<framework>/` in each package.** Do not add a `lib/` folder. Consumers must not copy the assemblies.
 - **The folder `Content` matches the `<Content>` item** in the pack project. Keep the two names the same.
 - **The order in `Packages.json` is the build order.** Put a package after the packages that it depends on.
+- **`README.md` is also the page of each package on NuGet.org.** Keep the consumer sections first. Use full URLs for
+	links to files, because a relative link does not work there.
 - **Keep `artifacts/` out of Git.** It holds build output.
 - **One version for each release.** All packages of a release have the same version, and depend on each other with
 	that exact version.

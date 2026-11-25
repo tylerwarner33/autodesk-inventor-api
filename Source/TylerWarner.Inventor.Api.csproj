@@ -32,12 +32,12 @@
 		<RepositoryUrl>https://github.com/tylerwarner33/autodesk-inventor-api</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageLicenseFile>NOTICE.md</PackageLicenseFile>
-		<PackageReadmeFile>PackageReadme.md</PackageReadmeFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<None Include="..\NOTICE.md" Pack="true" PackagePath="" />
-		<None Include="PackageReadme.md" Pack="true" PackagePath="" />
+		<None Include="..\README.md" Pack="true" PackagePath="" />
 		<Content Include="Content\$(Version)\$(LibraryName).*" PackagePath="ref\$(TargetFramework)\" />
 	</ItemGroup>
 
