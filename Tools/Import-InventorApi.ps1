@@ -49,8 +49,8 @@ $manifest = Get-Content -LiteralPath (Join-Path $repositoryRoot 'Packages.json')
 
 # The files to look for: each DLL, and the XML documentation beside it when there is one.
 $wantedFiles = foreach ($package in $manifest.packages) {
-	[pscustomobject]@{ Folder = $package.folder; Name = "$($package.assembly).dll"; Required = -not $package.optional }
-	[pscustomobject]@{ Folder = $package.folder; Name = "$($package.assembly).xml"; Required = (-not $package.optional) -and $package.xml }
+	[pscustomobject]@{ Folder = $package.folder; Name = "$($package.assembly).dll"; Required = $true }
+	[pscustomobject]@{ Folder = $package.folder; Name = "$($package.assembly).xml"; Required = $package.xml }
 }
 
 function Copy-FromInstallation([string] $InstallationFolder, [string] $Destination) {

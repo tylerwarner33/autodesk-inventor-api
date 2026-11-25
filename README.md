@@ -11,14 +11,14 @@ Unofficial multi-version NuGet packages for the Autodesk Inventor and iLogic API
 
 One package for each assembly. Each ID starts with `TylerWarner33.Inventor.Api.`.
 
-| Package | Assembly | Depends on | Built |
-| --- | --- | --- | --- |
-| `Interop` | `Autodesk.Inventor.Interop` | - | Always |
-| `iLogic.Types` | `Autodesk.iLogic.Types` | `Interop` | Always |
-| `iLogic.Interfaces` | `Autodesk.iLogic.Interfaces` | `Interop`, `iLogic.Types` | Always |
-| `iLogic.Runtime` | `Autodesk.iLogic.Runtime` | `Interop`, `iLogic.Interfaces`, `iLogic.Types` | Always |
-| `iLogic.Automation` | `Autodesk.iLogic.Automation` (no XML documentation) | `Interop`, `iLogic.Interfaces` | `-IncludeOptional` |
-| `iLogic.UiBuilderCore` | `Autodesk.iLogic.UiBuilderCore` | - | `-IncludeOptional` |
+| Package | Assembly | Depends on |
+| --- | --- | --- |
+| `Interop` | `Autodesk.Inventor.Interop` | - |
+| `iLogic.Types` | `Autodesk.iLogic.Types` | `Interop` |
+| `iLogic.Interfaces` | `Autodesk.iLogic.Interfaces` | `Interop`, `iLogic.Types` |
+| `iLogic.Runtime` | `Autodesk.iLogic.Runtime` | `Interop`, `iLogic.Interfaces`, `iLogic.Types` |
+| `iLogic.Automation` | `Autodesk.iLogic.Automation` (no XML documentation) | `Interop`, `iLogic.Interfaces` |
+| `iLogic.UiBuilderCore` | `Autodesk.iLogic.UiBuilderCore` | - |
 
 - The files are under `ref/<framework>/`. A consumer compiles against them, and nothing is copied to its output
 	folder, because Inventor supplies these assemblies at run time.
@@ -84,7 +84,7 @@ Add the output folder as a package source of the consumer, in its `nuget.config`
 </configuration>
 ```
 
-Then reference the packages that you need. `iLogic.Runtime` brings its dependencies.
+Then reference the packages that you need. Each package brings its dependencies.
 
 ```xml
 <ItemGroup>

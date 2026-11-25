@@ -14,20 +14,15 @@
 .PARAMETER Version
 	The Libs/ versions to build. The default is all of them.
 
-.PARAMETER IncludeOptional
-	Also builds the packages that Packages.json marks as optional.
-
 .EXAMPLE
 	./Tools/Build-Packages.ps1
 
 .EXAMPLE
-	./Tools/Build-Packages.ps1 -Version 2027.2.0 -IncludeOptional
+	./Tools/Build-Packages.ps1 -Version 2027.2.0
 #>
 [CmdletBinding()]
 param(
-	[string[]] $Version,
-
-	[switch] $IncludeOptional
+	[string[]] $Version
 )
 
 Set-StrictMode -Version Latest
@@ -114,8 +109,6 @@ if ($Version) {
 	$available = @($available | Where-Object Name -In $Version)
 }
 
-$selected = @($manifest.packages | Where-Object { $IncludeOptional -or -not $_.optional })
-
 & dotnet restore $project --verbosity quiet
 if ($LASTEXITCODE -ne 0) {
 	throw "The restore of '$project' failed."
@@ -125,15 +118,10 @@ foreach ($folder in $available) {
 	$release = $folder.Name.Split('.')[0]
 	$framework = $manifest.releases.$release
 
-	foreach ($package in $selected) {
+	foreach ($package in $manifest.packages) {
 		$assembly = Join-Path $folder.FullName "$($package.assembly).dll"
 
 		if (-not (Test-Path -LiteralPath $assembly)) {
-			if ($package.optional) {
-				Write-Warning "$($folder.Name) does not hold $($package.assembly).dll. Package skipped."
-				continue
-			}
-
 			throw "$($folder.Name) does not hold $($package.assembly).dll."
 		}
 

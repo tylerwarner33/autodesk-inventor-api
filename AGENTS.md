@@ -18,6 +18,6 @@ See `README.md` for the packages, the version rule, and the commands.
 
 ## Check a change
 
-There are no automated tests. After a change to `Packages.json` or a script, run `Tools/Build-Packages.ps1
--IncludeOptional`. Then build a small project for each framework against `artifacts/packages/`, with an isolated
-package folder (`dotnet build --packages <temporary folder>`), so the global cache keeps no test copy.
+There are no automated tests. After a change to `Packages.json` or a script, run `Tools/Build-Packages.ps1`. Then
+build a small project for each framework against `artifacts/packages/`, with an isolated package folder
+(`dotnet build --packages <temporary folder>`), so the global cache keeps no test copy.
