@@ -4,6 +4,7 @@
 *.zip   binary -delta
 *.dll   binary
 *.nupkg binary -delta
+*.png   binary
 
 # Autodesk files stay byte for byte as supplied: no line ending conversion, and no text diff of the large XML files.
 # This section stays last, because a later line overrides an earlier one.

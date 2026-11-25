@@ -33,11 +33,13 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageLicenseFile>NOTICE.md</PackageLicenseFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>images/PackageIcon.png</PackageIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<None Include="..\NOTICE.md" Pack="true" PackagePath="" />
 		<None Include="..\README.md" Pack="true" PackagePath="" />
+		<None Include="..\.nuget\PackageIcon.png" Pack="true" PackagePath="images/" />
 		<Content Include="Content\$(Version)\$(LibraryName).*" PackagePath="ref\$(TargetFramework)\" />
 	</ItemGroup>
 
