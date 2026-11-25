@@ -1,16 +1,18 @@
 # Autodesk Inventor API packages
 
-Builds unofficial NuGet reference packages from Autodesk Inventor and iLogic assemblies that the user supplies.
+Builds unofficial NuGet reference packages from the Autodesk Inventor and iLogic assemblies in `ref/`.
 See `README.md` for the packages, the version rule, and the commands.
 
 ## Rules
 
-- **No Autodesk files in Git.** This includes DLL files, XML documentation, and built packages, in each branch and
-	pull request. `Libs/` and `artifacts/` stay ignored. Git history keeps a file after a later commit deletes it.
-- **Do not publish a package** to nuget.org or another shared feed. That needs Autodesk's written permission and the
-	owner's instruction. Do not add a publish script or a publish workflow before then.
-- **Do not mark a package as MIT.** The packages use `NOTICE.md` as their license file.
-- **Keep `ref/<framework>/`.** Do not add a `lib/` folder. Consumers must not copy the assemblies.
+- **`ref/` holds Autodesk files**, which the owner keeps in this public repository. Add them only with
+	`Tools/Import-InventorApi.ps1`, which checks the Autodesk signature. Do not edit them, and do not change their
+	line endings. Add no other Autodesk files.
+- **Do not publish a package** to nuget.org or another shared feed unless the owner tells you to. A published
+	version cannot be replaced.
+- **Do not mark a package or an Autodesk file as MIT.** The packages use `NOTICE.md` as their license file.
+- **Keep `ref/<framework>/` in each package.** Do not add a `lib/` folder. Consumers must not copy the assemblies.
+- **Keep `artifacts/` out of Git.** It holds build output.
 - **One version for each release.** All packages of a release have the same version, and depend on each other with
 	that exact version.
 - **No private data.** Do not write user names, machine names, or absolute user paths. Write a variable

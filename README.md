@@ -2,10 +2,8 @@
 
 Unofficial multi-version NuGet packages for the Autodesk Inventor and iLogic API reference assemblies.
 
-> **This repository holds no Autodesk files, and no package is published.** You supply the files from your own
-> Inventor installation or installer media, and you build the packages on your machine. Autodesk's license limits
-> the distribution of its files. Get Autodesk's written permission before you publish a package. Read
-> [NOTICE.md](NOTICE.md).
+> **Unofficial.** This project is not affiliated with Autodesk. The files in `ref/` are Autodesk files, the MIT
+> license does not apply to them, and this project grants no rights to them. Read [NOTICE.md](NOTICE.md).
 
 ## Packages
 
@@ -29,16 +27,18 @@ One package for each assembly. Each ID starts with `TylerWarner33.Inventor.Api.`
 The version is `<product year>.<update>.<patch>`, and each package of a release has the same version. It comes from
 the file version of `Autodesk.iLogic.Interfaces.dll` (ex. `29.40.40700` is `2025.4.0`).
 
-| Inventor | Framework folder | Version of the files used for the first build |
-| --- | --- | --- |
-| 2020 | `ref/net47/` | `2020.0.0` (installer media) |
-| 2021 | `ref/net48/` | `2021.0.0` (installer media) |
-| 2022 | `ref/net48/` | `2022.0.0` (installer media) |
-| 2023 | `ref/net48/` | `2023.0.0` (installer media) |
-| 2024 | `ref/net48/` | `2024.0.0` (installer media) |
-| 2025 | `ref/net8.0/` | `2025.4.0` (installation) |
-| 2026 | `ref/net8.0/` | `2026.4.0` (installation) |
-| 2027 | `ref/net10.0/` | `2027.2.0` (installation) |
+| Inventor | Version | Files in this repository | Source of the files |
+| --- | --- | --- | --- |
+| 2020 | `2020.0.0` | `ref/net47/2020.0.0/` | Installer media |
+| 2021 | `2021.0.0` | `ref/net48/2021.0.0/` | Installer media |
+| 2022 | `2022.0.0` | `ref/net48/2022.0.0/` | Installer media |
+| 2023 | `2023.0.0` | `ref/net48/2023.0.0/` | Installer media |
+| 2024 | `2024.0.0` | `ref/net48/2024.0.0/` | Installer media |
+| 2025 | `2025.4.0` | `ref/net8.0/2025.4.0/` | Installation |
+| 2026 | `2026.4.0` | `ref/net8.0/2026.4.0/` | Installation |
+| 2027 | `2027.2.0` | `ref/net10.0/2027.2.0/` | Installation |
+
+A package holds its files under `ref/<framework>/`, without the version folder.
 
 The framework is the one that Inventor hosts. The iLogic assemblies of 2021 and 2022 target .NET Framework 4.7,
 but their installer media supplies .NET Framework 4.8.
@@ -48,26 +48,28 @@ but their installer media supplies .NET Framework 4.8.
 - Windows.
 - [PowerShell 7](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows).
 - The .NET 10 SDK.
-- An Inventor installation, or the installer media as a `.zip` file, for each release that you want.
 
 ## Build the packages
 
-1. Import the files into `Libs/<version>/`. The script accepts installation folders and `.zip` files. It installs
-	nothing, and it accepts only files with a valid Autodesk signature.
+Build the packages from the files in `ref/` into `artifacts/packages/`:
 
-	```powershell
-	./Tools/Import-InventorApi.ps1 -Source "$env:ProgramFiles\Autodesk\Inventor 2027"
-	```
+```powershell
+./Tools/Build-Packages.ps1
+```
 
-	```powershell
-	./Tools/Import-InventorApi.ps1 -Source "$env:USERPROFILE\Downloads\Inventor_2021.zip"
-	```
+## Import files
 
-2. Build the packages into `artifacts/packages/`.
+To add a release or an update, import its files into `ref/<framework>/<version>/`. The script accepts Inventor
+installation folders and installer media `.zip` files. It installs nothing, and it accepts only files with a valid
+Autodesk signature.
 
-	```powershell
-	./Tools/Build-Packages.ps1
-	```
+```powershell
+./Tools/Import-InventorApi.ps1 -Source "$env:ProgramFiles\Autodesk\Inventor 2027"
+```
+
+```powershell
+./Tools/Import-InventorApi.ps1 -Source "$env:USERPROFILE\Downloads\Inventor_2021.zip"
+```
 
 A `.msp` update patch is not a source. To get the files of an update, install it, and then import from the
 installation folder.
@@ -103,8 +105,8 @@ central package management, a floating version also needs `CentralPackageFloatin
 1. For a new release, add the year and its framework to `releases` in [Packages.json](Packages.json).
 2. Import the files, and build the packages.
 
-An update of a release gets its own `Libs/<version>/` folder. If the script reads a wrong version, give the correct
-one with `-Version`.
+An update of a release gets its own `ref/<framework>/<version>/` folder. If the script reads a wrong version, give
+the correct one with `-Version`.
 
 ## Repository layout
 
@@ -113,7 +115,7 @@ one with `-Version`.
 | `Packages.json` | The packages, their dependencies, and the framework of each release |
 | `Tools/` | The import and build scripts |
 | `Source/` | The pack project and the readme inside each package |
-| `Libs/` | The imported Autodesk files. Not in Git. |
+| `ref/` | The Autodesk files, one folder for each framework and version |
 | `artifacts/` | The built packages. Not in Git. |
 
 ## License

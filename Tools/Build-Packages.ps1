@@ -2,17 +2,17 @@
 
 <#
 .SYNOPSIS
-	Builds the NuGet packages from the files in Libs/.
+	Builds the NuGet packages from the files in ref/.
 
 .DESCRIPTION
-	Makes one package for each assembly of each Libs/<version>/ folder, as Packages.json describes.
+	Makes one package for each assembly of each ref/<framework>/<version>/ folder, as Packages.json describes.
 	Each package holds the files under ref/<framework>/, so a consumer compiles against them and copies nothing.
 	Dependencies between the packages use the exact version.
 
 	This script publishes nothing. The packages go to artifacts/packages/.
 
 .PARAMETER Version
-	The Libs/ versions to build. The default is all of them.
+	The versions in ref/ to build. The default is all of them.
 
 .EXAMPLE
 	./Tools/Build-Packages.ps1
@@ -30,7 +30,7 @@ $ErrorActionPreference = 'Stop'
 
 $repositoryRoot = Split-Path -Parent $PSScriptRoot
 $manifest = Get-Content -LiteralPath (Join-Path $repositoryRoot 'Packages.json') -Raw | ConvertFrom-Json
-$libsFolder = Join-Path $repositoryRoot 'Libs'
+$refFolder = Join-Path $repositoryRoot 'ref'
 $nuspecFolder = Join-Path $repositoryRoot 'artifacts' 'nuspec'
 $outputFolder = Join-Path $repositoryRoot 'artifacts' 'packages'
 $project = Join-Path $repositoryRoot 'Source' 'Package.csproj'
@@ -92,18 +92,19 @@ $($files -join "`n")
 }
 
 $available = @()
-if (Test-Path -LiteralPath $libsFolder) {
-	$available = @(Get-ChildItem -LiteralPath $libsFolder -Directory | Where-Object Name -Match '^\d{4}\.\d+\.\d+$')
+if (Test-Path -LiteralPath $refFolder) {
+	$available = @(Get-ChildItem -LiteralPath $refFolder -Directory | Get-ChildItem -Directory |
+			Where-Object Name -Match '^\d{4}\.\d+\.\d+$' | Sort-Object Name)
 }
 
 if ($available.Count -eq 0) {
-	throw 'Libs/ holds no version folder. Run Tools/Import-InventorApi.ps1 first.'
+	throw 'ref/ holds no version folder. Run Tools/Import-InventorApi.ps1 first.'
 }
 
 if ($Version) {
 	$unknown = @($Version | Where-Object { $_ -notin $available.Name })
 	if ($unknown.Count -gt 0) {
-		throw "Libs/ does not hold: $($unknown -join ', ')."
+		throw "ref/ does not hold: $($unknown -join ', ')."
 	}
 
 	$available = @($available | Where-Object Name -In $Version)
@@ -117,6 +118,10 @@ if ($LASTEXITCODE -ne 0) {
 foreach ($folder in $available) {
 	$release = $folder.Name.Split('.')[0]
 	$framework = $manifest.releases.$release
+
+	if ($folder.Parent.Name -ne $framework) {
+		throw "$($folder.Name) is in ref/$($folder.Parent.Name)/, but Packages.json gives $release the framework '$framework'."
+	}
 
 	foreach ($package in $manifest.packages) {
 		$assembly = Join-Path $folder.FullName "$($package.assembly).dll"
