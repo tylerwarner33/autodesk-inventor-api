@@ -135,6 +135,7 @@ a GitHub release for each version.
 | `Tools/` | The import and build scripts |
 | `Source/` | The pack project |
 | `Source/Content/` | The Autodesk files, one folder for each version |
+| `.nuget/` | The icon of the packages |
 | `.github/workflows/` | The manual publish workflow |
 | `artifacts/` | The built packages. Not in Git. |
 
